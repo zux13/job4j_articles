@@ -14,18 +14,15 @@ public class Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class.getSimpleName());
 
+    public static final int TARGET_COUNT = 1_000_000;
+
     public static void main(String[] args) {
         var properties = loadProperties();
         var wordStore = new WordStore(properties);
         var articleStore = new ArticleStore(properties);
         var articleGenerator = new RandomArticleGenerator();
-        var articleService = new SimpleArticleService(
-                articleGenerator, wordStore, articleStore
-        );
-        articleService.generate(1_000_000).forEach(article -> {
-            System.out.println(article.getText());
-            System.out.println("-".repeat(100));
-        });
+        var articleService = new SimpleArticleService(articleGenerator);
+        articleService.generate(wordStore, TARGET_COUNT, articleStore);
     }
 
     private static Properties loadProperties() {
