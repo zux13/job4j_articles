@@ -36,8 +36,8 @@ public class ArticleStore implements Store<Article>, AutoCloseable {
                     properties.getProperty("username"),
                     properties.getProperty("password")
             );
-        } catch (SQLException throwables) {
-            LOGGER.error("Не удалось выполнить операцию: { }", throwables.getCause());
+        } catch (SQLException e) {
+            LOGGER.error("Не удалось выполнить операцию: { }", e.getCause());
             throw new IllegalStateException();
         }
     }
